@@ -6,8 +6,12 @@
  //@param {number} number1
  //@param {number} number2
  //@return {number} product
-const multiplication = () => {
-  return
+const multiplication = (num1=7,num2=6) => {
+  let product = 0;
+  for (let i = 0; i < num1; i++) {
+    product += num2;
+  }
+  return product;
 }
 
 const answer1 = multiplication()
@@ -25,8 +29,28 @@ htmlTarget.innerHTML = answer1
 
 //@param {string}
 //@return {character} => array of characters
-vowelOrConsonant = () => {
-  return
+vowelOrConsonant = (str="this is the forest primeval") => {
+  const vowels="aeiou";
+  const consonants="bcdfghjklmnpqrstvwxyz";
+  const strL = str.toLowerCase();
+  const strA = strL.split("");
+  const vStr = [];
+  const cStr = [];
+  strA.forEach ((letter) => {
+    if (vowels.includes(letter)) {
+      vStr.push(letter);
+    } else if (consonants.includes(letter)) {
+      cStr.push(letter);
+    }
+  });
+  let outArray = [];
+  c=prompt("Enter c if you want consonants first.  Otherwise you will get vowels first.")
+  if (c==="c") {
+    outArray = cStr.concat(vStr);
+  } else {
+    outArray = vStr.concat(cStr);
+  }
+  return outArray;
 }
 
 const answer2 = vowelOrConsonant()
@@ -46,7 +70,26 @@ htmlTarget2.innerHTML = answer2
 
 //@return {string} win / gameOver => the string that says if the user wasted the three oportunities showing the fails numbers or the name if the player wins
 guessTheNumber  = () => {
-  return
+  x = Math.floor(Math.random() * 41) + 10;
+  name = prompt("Enter your name:");
+  let player = {
+    name: name,
+    lives: 3,
+    fail_numbers: []
+  };
+  let returnString = "";
+  for (; player.lives>0;player.lives--) {
+    const guess = parseInt(prompt("Guess a number between 10 and 50:"));
+    if (guess === x) {
+      break;
+    }
+    player.fail_numbers.push(guess);
+  }
+  if (player.lives === 0) {
+    return `${player.name}, you wasted your 3 lives guessing ${player.fail_numbers}.  The secret number was ${x}.`
+  } else {
+    return `${player.name}, you win! The secret number was ${x}.`
+  }
 }
 
 const answer3 = guessTheNumber()
@@ -79,8 +122,27 @@ sort = () => {
        author: 'Suzanne Collins',
        libraryID: 3245
    }];
+  let sortOption = 0;
+  do {
+    sortOption = parseInt(prompt("Enter 1 to sort by title, 2 to sort by author, or 3 to sort by libraryID"));
+  } while (![1,2,3].includes(sortOption));
+  const librarySorted = library.sort( (a,b) => {
+    if (sortOption===1) {
+      return (b.title.length - a.title.length );
+    } else if (sortOption===2) {
+      return (b.author.length - a.author.length );
+    } else {
+      return (b.libraryID - a.libraryID);
+    }
+  });
 
-  return
+  if (sortOption===1) {
+    return `${librarySorted[0].title};${librarySorted[1].title};${librarySorted[2].title}`;
+  } else if (sortOption===2) {
+    return `${librarySorted[0].author};${librarySorted[1].author};${librarySorted[2].author}`;
+  } else {
+    return `${librarySorted[0].libraryID};${librarySorted[1].libraryID};${librarySorted[2].libraryID}`;
+  }
 }
 
 const answer4 = sort()
